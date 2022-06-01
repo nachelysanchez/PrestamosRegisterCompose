@@ -165,6 +165,12 @@ fun RegistroPersonaScreen(navHostController: NavHostController){
     var person by rememberSaveable(){
         mutableStateOf("")
     }
+    var email by rememberSaveable(){
+        mutableStateOf("")
+    }
+    var salario by rememberSaveable(){
+        mutableStateOf("")
+    }
 
     val ocup = listOf("Maestro", "Ingeniero", "Doctor", "Carpinterio")
     Column(modifier = Modifier.padding(8.dp)) {
@@ -183,8 +189,8 @@ fun RegistroPersonaScreen(navHostController: NavHostController){
         )
 
         OutlinedTextField(
-            value = person,
-            onValueChange = {person = it},
+            value = email,
+            onValueChange = {email = it},
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(text = "Email")
@@ -199,8 +205,8 @@ fun RegistroPersonaScreen(navHostController: NavHostController){
         OcupacionesSpinner(ocupacion = ocup)
 
         OutlinedTextField(
-            value = person,
-            onValueChange = {person = it},
+            value = salario,
+            onValueChange = {salario = it},
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(text = "Salario")
