@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
 fun MyApp() {
     val navHostController = rememberNavController()
 
-    NavHost(navController = navHostController, startDestination = "ConsultaOcupaciones"){
+    NavHost(navController = navHostController, startDestination = "ConsultaPersonas"){
         composable("ConsultaOcupaciones"){
             ConsultaOcupacionesScreen(navHostController = navHostController)
         }
@@ -57,10 +57,10 @@ fun MyApp() {
             RegistroOcupacionesScreen(navHostController = navHostController)
         }
         composable("ConsultaPersonas"){
-            ConsultaPersonaScreen()
+            ConsultaPersonaScreen(navHostController = navHostController)
         }
         composable("RegistroPersona"){
-            RegistroPersonaScreen()
+            RegistroPersonaScreen(navHostController = navHostController)
         }
     }
 }
@@ -114,7 +114,7 @@ fun RegistroOcupacionesScreen(navHostController: NavHostController){
             },
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Default.Person,
+                    imageVector = Icons.Default.Settings,
                     contentDescription = null)
             }
         )
@@ -128,23 +128,40 @@ fun RegistroOcupacionesScreen(navHostController: NavHostController){
 }
 
 @Composable
-fun ConsultaPersonaScreen(){
-    Column(modifier = Modifier.padding(8.dp)) {
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "Nueva Ocupación")
+fun ConsultaPersonaScreen(navHostController: NavHostController){
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Consulta de Personas")}
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                navHostController.navigate("RegistroPersonas")
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+            }
         }
-        val lista = listOf("Kelvin", "Alvaro", "Nachely", "Vismar", "Enel", "Junior")
 
-        LazyColumn(modifier = Modifier.fillMaxWidth()){
-            items(lista){
-                nombre -> RowPersona(nombre = nombre)
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+            Button(onClick = { navHostController.navigate("ConsultaOcupaciones") }) {
+                Text(text = "Nueva Ocupación")
+            }
+            val lista = listOf("Kelvin", "Alvaro", "Nachely", "Vismar", "Enel", "Junior")
+
+            LazyColumn(modifier = Modifier.fillMaxWidth()){
+                items(lista){
+                        nombre -> RowPersona(nombre = nombre)
+                }
             }
         }
     }
+
 }
 
 @Composable
-fun RegistroPersonaScreen(){
+fun RegistroPersonaScreen(navHostController: NavHostController){
     var person by rememberSaveable(){
         mutableStateOf("")
     }
@@ -166,8 +183,8 @@ fun RegistroPersonaScreen(){
         )
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = person,
+            onValueChange = {person = it},
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(text = "Email")
@@ -182,8 +199,8 @@ fun RegistroPersonaScreen(){
         OcupacionesSpinner(ocupacion = ocup)
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = person,
+            onValueChange = {person = it},
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(text = "Salario")
@@ -195,7 +212,7 @@ fun RegistroPersonaScreen(){
             }
         )
 
-        OutlinedButton(onClick = { /*TODO*/ }) {
+        OutlinedButton(onClick = { navHostController.navigateUp() }) {
             Text(text = "Guardar")
         }
     }
