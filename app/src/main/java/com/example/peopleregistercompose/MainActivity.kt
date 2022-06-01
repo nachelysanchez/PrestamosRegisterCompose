@@ -137,7 +137,7 @@ fun ConsultaPersonaScreen(navHostController: NavHostController){
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navHostController.navigate("RegistroPersonas")
+                navHostController.navigate("RegistroPersona")
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }
