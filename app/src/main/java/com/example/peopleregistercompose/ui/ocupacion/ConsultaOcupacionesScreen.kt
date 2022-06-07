@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.peopleregistercompose.RowOcupacion
+import com.example.peopleregistercompose.utils.Screen
 
 @Composable
 fun ConsultaOcupacionesScreen(
@@ -29,7 +30,7 @@ fun ConsultaOcupacionesScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navHostController.navigate("RegistroOcupaciones")
+                navHostController.navigate(Screen.RegistroOcupacionesScreen.route)
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }

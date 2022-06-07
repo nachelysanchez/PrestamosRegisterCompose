@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.peopleregistercompose.RowPersona
+import com.example.peopleregistercompose.utils.Screen
 
 @Composable
 fun ConsultaPersonaScreen(
@@ -29,7 +30,7 @@ fun ConsultaPersonaScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navHostController.navigate("RegistroPersona")
+                navHostController.navigate(Screen.RegistroPersonaScreen.route)
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }
@@ -40,7 +41,7 @@ fun ConsultaPersonaScreen(
             .padding(it)
             .padding(8.dp)) {
             
-            Button(onClick = { navHostController.navigate("ConsultaOcupaciones") }) {
+            Button(onClick = { navHostController.navigate(Screen.ConsultaOcupacionScreen.route) }) {
                 Text(text = "Nueva Ocupación")
             }
             val lista = viewModel.personas.collectAsState(initial = emptyList())

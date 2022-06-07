@@ -21,7 +21,7 @@ class PersonaViewModel @Inject constructor(
 
     var ocupacionId by mutableStateOf(0)
 
-    var salario by mutableStateOf(0)
+    var salario by mutableStateOf("")
 
     var personas = personaRepository.getList()
     private set

@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,9 +27,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.peopleregistercompose.model.Ocupacion
 import com.example.peopleregistercompose.model.Persona
 import com.example.peopleregistercompose.ui.ocupacion.ConsultaOcupacionesScreen
+import com.example.peopleregistercompose.ui.ocupacion.OcupacionViewModel
 import com.example.peopleregistercompose.ui.ocupacion.RegistroOcupacionesScreen
 import com.example.peopleregistercompose.ui.personas.ConsultaPersonaScreen
+import com.example.peopleregistercompose.ui.personas.PersonaViewModel
+import com.example.peopleregistercompose.ui.personas.RegistroPersonaScreen
 import com.example.peopleregistercompose.ui.theme.PeopleRegisterComposeTheme
+import com.example.peopleregistercompose.utils.Screen
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -55,17 +60,17 @@ class MainActivity : ComponentActivity() {
 fun MyApp() {
     val navHostController = rememberNavController()
 
-    NavHost(navController = navHostController, startDestination = "ConsultaPersonas"){
-        composable("ConsultaOcupaciones"){
+    NavHost(navController = navHostController, startDestination = Screen.ConsultaPersonaScreen.route){
+        composable(Screen.ConsultaOcupacionScreen.route){
             ConsultaOcupacionesScreen(navHostController = navHostController)
         }
-        composable("RegistroOcupaciones"){
+        composable(Screen.RegistroOcupacionesScreen.route){
             RegistroOcupacionesScreen(navHostController = navHostController)
         }
-        composable("ConsultaPersonas"){
+        composable(Screen.ConsultaPersonaScreen.route){
             ConsultaPersonaScreen(navHostController = navHostController)
         }
-        composable("RegistroPersona"){
+        composable(Screen.RegistroPersonaScreen.route){
             RegistroPersonaScreen(navHostController = navHostController)
         }
     }
@@ -166,7 +171,7 @@ fun ConsultaPersonaScreen(navHostController: NavHostController){
 
 }*/
 
-@Composable
+/*@Composable
 fun RegistroPersonaScreen(navHostController: NavHostController){
     var person by rememberSaveable(){
         mutableStateOf("")
@@ -228,10 +233,14 @@ fun RegistroPersonaScreen(navHostController: NavHostController){
             Text(text = "Guardar")
         }
     }
-}
+}*/
 
 @Composable
-fun OcupacionesSpinner(ocupacion:List<String>){
+fun OcupacionesSpinner(
+    viewModel: OcupacionViewModel = hiltViewModel(),
+    viewModelP: PersonaViewModel = hiltViewModel()
+){
+    val ocupaciones = viewModel.ocupaciones.collectAsState(initial = emptyList())
 
     var ocupacionText by remember{
         mutableStateOf("")
@@ -253,15 +262,16 @@ fun OcupacionesSpinner(ocupacion:List<String>){
             Text(text = ocupacionText, fontSize = 18.sp, modifier = Modifier.padding(end = 8.dp))
             Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "")
             DropdownMenu(expanded = expended, onDismissRequest = { expended = false}) {
-                ocupacion.forEach {
-                    ocupacion -> DropdownMenuItem(onClick = {
-
+                ocupaciones.value.forEach {
+                    ocupacion ->
+                    DropdownMenuItem(onClick = {
+                        viewModelP.ocupacionId = ocupacion.ocupacionId
                         expended = false
-                    ocupacionText = ocupacion.toString()
-                    selectedOcupacion = ocupacion
-                }) {
-                        Text(text = ocupacion.toString())
-                }
+                        ocupacionText = ocupacion.nombres
+                        selectedOcupacion = ocupacion.nombres
+                    }) {
+                            Text(text = ocupacion.nombres)
+                    }
                 }
 
             }
