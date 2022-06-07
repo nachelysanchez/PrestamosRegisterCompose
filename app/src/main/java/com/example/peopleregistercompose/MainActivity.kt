@@ -24,8 +24,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.peopleregistercompose.model.Ocupacion
+import com.example.peopleregistercompose.model.Persona
 import com.example.peopleregistercompose.ui.ocupacion.ConsultaOcupacionesScreen
 import com.example.peopleregistercompose.ui.ocupacion.RegistroOcupacionesScreen
+import com.example.peopleregistercompose.ui.personas.ConsultaPersonaScreen
 import com.example.peopleregistercompose.ui.theme.PeopleRegisterComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -131,7 +133,7 @@ fun RegistroOcupacionesScreen(navHostController: NavHostController){
     }
 }*/
 
-@Composable
+/*@Composable
 fun ConsultaPersonaScreen(navHostController: NavHostController){
     Scaffold(
         topBar = {
@@ -162,7 +164,7 @@ fun ConsultaPersonaScreen(navHostController: NavHostController){
         }
     }
 
-}
+}*/
 
 @Composable
 fun RegistroPersonaScreen(navHostController: NavHostController){
@@ -268,9 +270,9 @@ fun OcupacionesSpinner(ocupacion:List<String>){
 }
 
 @Composable
-fun RowPersona(nombre:String){
+fun RowPersona(persona : Persona){
     Row() {
-        Text(text = "El nombre es: $nombre")
+        Text(text = persona.nombres)
     }
 }
 
