@@ -23,11 +23,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.peopleregistercompose.model.Ocupacion
+import com.example.peopleregistercompose.ui.ocupacion.ConsultaOcupacionesScreen
+import com.example.peopleregistercompose.ui.ocupacion.RegistroOcupacionesScreen
 import com.example.peopleregistercompose.ui.theme.PeopleRegisterComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 
 var selectedOcupacion: String? = null
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +69,7 @@ fun MyApp() {
     }
 }
 
-@Composable
+/*@Composable
 fun ConsultaOcupacionesScreen(navHostController: NavHostController){
     Scaffold(
         topBar = {
@@ -82,7 +86,7 @@ fun ConsultaOcupacionesScreen(navHostController: NavHostController){
         }
 
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier.padding(it).padding(8.dp)) {
 
             val lista = listOf("Maestro", "Ingeniero", "Doctor", "Carpinterio")
 
@@ -96,9 +100,9 @@ fun ConsultaOcupacionesScreen(navHostController: NavHostController){
         }
     }
 
-}
+}*/
 
-@Composable
+/*@Composable
 fun RegistroOcupacionesScreen(navHostController: NavHostController){
     var ocupacion by rememberSaveable(){
         mutableStateOf("")
@@ -125,7 +129,7 @@ fun RegistroOcupacionesScreen(navHostController: NavHostController){
             Text(text = "Guardar")
         }
     }
-}
+}*/
 
 @Composable
 fun ConsultaPersonaScreen(navHostController: NavHostController){
@@ -271,9 +275,9 @@ fun RowPersona(nombre:String){
 }
 
 @Composable
-fun RowOcupacion(ocupacion:String){
+fun RowOcupacion(ocupacion: Ocupacion){
     Row() {
-        Text(text = "El nombre de la Ocupación es: $ocupacion")
+        Text(text = ocupacion.nombres)
     }
 }
 
